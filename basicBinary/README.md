@@ -1,6 +1,6 @@
 #USAGE
 
-####Uses a basic genetic algorithm strategy to reach a 64-bit string strategy
+####Uses a basic genetic algorithm strategy to reach a 64-bit array solution
 
 
 
