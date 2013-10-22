@@ -12,7 +12,7 @@ def parse_args():
     parser.add_argument('-s', '--solution', help='path to torrent file', 
             dest='solution', required=True, type=str)
                         
-    parser.add_argument('--random', help='crossover bits at random locations', dest='random',action='store_true')
+    parser.add_argument('--random', help='crossover on random locations', dest='random',action='store_true')
     parser.add_argument('--not-random',dest='random',action='store_false')
     parser.set_defaults(random=True)
     
