@@ -1,11 +1,11 @@
 from bitstring import BitArray
+import fitness
 from random import random
 
 class Individual(object):
-    def __init__(self, fitness_calc):
+    def __init__(self):
         self._default_gene_length = 64
         self._fitness = 0
-        self.fitness_calc = fitness_calc
         self.genes = BitArray()
         
         for i in range(0, self._default_gene_length):
@@ -21,7 +21,7 @@ class Individual(object):
     
     def get_fitness(self):
         if self._fitness == 0:
-            self._fitness = self.fitness_calc.get_fitness(self)
+            self._fitness = fitness.get_fitness(self)
         return self._fitness
     
     

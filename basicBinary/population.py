@@ -1,12 +1,12 @@
 from individual import Individual
 
 class Population(object):
-    def __init__(self, size, fitness_calc, initialize=False):
+    def __init__(self, size, initialize=False):
         self.individuals = []
         
         if initialize:
             for i in range(0, size):
-                individual = Individual(fitness_calc)
+                individual = Individual()
                 individual.generate_individual()
                 self.individuals.append(individual)
     

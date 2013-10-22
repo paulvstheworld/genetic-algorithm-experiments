@@ -4,16 +4,15 @@ from random import random
 
 
 class Algorithm(object):
-    def __init__(self, fitness_calc):
+    def __init__(self):
         self.uniform_rate = 0.5
         self.mutation_rate = 0.015
         self.tournament_size = 5
         self.elitism = True
-        self.fitness_calc = fitness_calc
     
     def evolvePopulation(self, population):
         population_size = len(population.individuals)
-        new_population = Population(population_size, self.fitness_calc, initialize=False)
+        new_population = Population(population_size, initialize=False)
         
         if self.elitism:
             new_population.individuals.append(population.get_fittest())
@@ -46,7 +45,7 @@ class Algorithm(object):
 
 
     def crossover(self, individual_1, individual_2):
-        crossover_individual = Individual(self.fitness_calc)
+        crossover_individual = Individual()
         
         for i in range(0, len(crossover_individual.genes)):
             # crossover

@@ -1,22 +1,20 @@
 from bitstring import BitArray
 
+solution = BitArray()
 
-class FitnessCalculator(object):
-    def __init__(self):
-        self.solution = BitArray()
+def set_solution(sol):
+    global solution
+    solution = BitArray(bin=sol)
+
+
+def get_fitness(individual):
+    fitness = 0
     
-    def set_solution(self, soln):
-        self.solution = BitArray(bin=soln)
-    
-    def get_fitness(self, individual):
-        fitness = 0
-        
-        for i in range(0, len(individual.genes)):
-            if individual.genes[i] == self.solution[i]:
-                fitness += 1
+    for i in range(0, len(individual.genes)):
+        if individual.genes[i] == solution[i]:
+            fitness += 1
 
-        return fitness
+    return fitness
 
-
-    def get_max_fitness(self):
-        return len(self.solution)
+def get_max_fitness():
+    return len(solution)
