@@ -5,6 +5,7 @@ from binarygeneticalgorithm import BinaryGeneticAlgorithm
 def parse_args():
     import argparse
     import re
+    
     acceptable_solution_length = 64
     
     parser = argparse.ArgumentParser(description='Simple Binary Genetic Algorithm.')
