@@ -5,7 +5,7 @@ import fitness
 
 
 class BinaryGeneticAlgorithm(object):
-    def __init__(self, sol):
+    def __init__(self, sol, use_random_crossover=True):
         generation_count = 0
         fitness.set_solution(sol)
         population = Population(50, initialize=True)
@@ -15,7 +15,7 @@ class BinaryGeneticAlgorithm(object):
             print "Fittest Scores: %d" % (population.get_fittest().get_fitness(),)
             print "Fittest: %s\n" % (population.get_fittest().genes.bin,)
             generation_count += 1
-            population = Algorithm().evolvePopulation(population)
+            population = Algorithm(use_random_crossover).evolvePopulation(population)
         
         msg = "===== SOLUTION FOUND! =====\nGENERATION: %d\nGENES: %s\n"
         print msg % (generation_count, population.get_fittest().genes.bin)
