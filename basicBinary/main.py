@@ -9,7 +9,7 @@ def parse_args():
     acceptable_solution_length = 64
     
     parser = argparse.ArgumentParser(description='Simple Binary Genetic Algorithm.')
-    parser.add_argument('-s', '--solution', help='path to torrent file', 
+    parser.add_argument('-s', '--solution', help='64-bit bitarray solution', 
             dest='solution', required=True, type=str)
                         
     parser.add_argument('--random', help='crossover on random locations', dest='random',action='store_true')
