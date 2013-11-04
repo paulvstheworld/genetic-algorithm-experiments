@@ -6,7 +6,7 @@
 
 For crossover at a certain point
     
-    python main.py --solution 1111000000000000000000000000000000000000000000000000000000001111 --no-random
+    python main.py --solution 1111000000000000000000000000000000000000000000000000000000001111 --not-random
 
 
 For crossover at random points
