@@ -1,38 +1,32 @@
 #!/usr/bin/env python
+import argparse
+import os
+import re
 
 from binarygeneticalgorithm import BinaryGeneticAlgorithm
 
+
 def parse_args():
-    import argparse
-    import re
-    
-    acceptable_solution_length = 64
-    
-    parser = argparse.ArgumentParser(description='Simple Binary Genetic Algorithm.')
-    parser.add_argument('-s', '--solution', help='64-bit bitarray solution', 
-            dest='solution', required=True, type=str)
-                        
-    parser.add_argument('--random', help='crossover on random locations', dest='random',action='store_true')
-    parser.add_argument('--not-random',dest='random',action='store_false')
-    parser.set_defaults(random=True)
-    
+    parser = argparse.ArgumentParser(description='Using a genetic algorithm to match to a target string')
+    parser.add_argument('-s', '--string',
+                        help='string final target',
+                        dest='string',
+                        required=False,
+                        type=str)
+
+    parser.add_argument('-f', '--file',
+                        help='file containing target string',
+                        dest='file',
+                        required=False,
+                        type=argparse.FileType('r'))
+
     args = parser.parse_args()
-    solution = args.solution
-    random = args.random
-    
-    if len(solution) != acceptable_solution_length:
-        raise Exception('solution has invalid length of %d should be %d' % (
-        len(solution), acceptable_solution_length))
-    
-    pattern = r'[^\.0-1]'
-    if re.search(pattern, solution):
-        raise Exception('solution contains invalid character %d' % (len(solution),))
-        
-    return solution, random
-    
+    return args.string, args.file
+
 def main():
-    solution, random = parse_args()
-    binary_genetic_algo = BinaryGeneticAlgorithm(solution, use_random_crossover=random)
-    
+    string, file = parse_args()
+
+    binary_genetic_algo = BinaryGeneticAlgorithm(string, use_random_crossover=False)
+
 if __name__ == '__main__':
     main()
