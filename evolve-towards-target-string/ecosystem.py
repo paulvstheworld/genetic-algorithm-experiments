@@ -15,6 +15,9 @@ class Individual(object):
     def __eq__(self, other):
         return self.genes == other.genes
 
+    def __ne__(self, other):
+        return self.genes != other.genes
+
     def get_fitness(self, target_individual):
         if not self._fitness:
             fitness_score = 0

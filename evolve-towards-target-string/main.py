@@ -57,14 +57,13 @@ def main():
     ecosystem = Ecosystem(charset, target_individual)
     ecosystem.set_random_current_population(50)
     
-    while ecosystem.get_current_fittest().genes != target_individual.genes:
+    while ecosystem.get_current_fittest() != target_individual:
         ecosystem.evolve()
         print "Currently at generation {0}".format(ecosystem.generation)
         print "Fittest gene = {0}".format(''.join(ecosystem.get_current_fittest().genes))
 
-    print "TARGET REACHED!!!"
+    print "TARGET REACHED AFTER {0} GENERATIONS!!!".format(ecosystem.generation)
     print "Target = {0}".format(''.join(ecosystem.get_current_fittest().genes))
-
 
 if __name__ == '__main__':
     main()
