@@ -130,3 +130,11 @@ class Ecosystem(object):
 
     def get_current_fittest(self):
         return self.current_population.get_fittest(self.target_individual)
+
+    def print_results(self):
+        print "Generation = {0}".format(self.generation)
+        print "Fittest gene = {0}".format(''.join(self.get_current_fittest().genes))
+
+    def print_success(self):
+        generation_string = "GENERATION" if self.generation == 1 else "GENERATIONS"
+        print "\nTARGET REACHED AFTER {0} {1}!!!\n".format(self.generation, generation_string)

@@ -56,7 +56,6 @@ def parse_args():
     return parser.parse_args()
 
 
-
 def main():
     args= parse_args()
     file = args.file
@@ -89,13 +88,12 @@ def main():
     
     # evolve ecosystem until the fittest individual matches the target
     while ecosystem.get_current_fittest() != target_individual:
-        ecosystem.evolve(random_crossover)
-        print "Generation = {0}".format(ecosystem.generation)
-        print "Fittest gene = {0}".format(''.join(ecosystem.get_current_fittest().genes))
+        ecosystem.print_results()
+        ecosystem.evolve()
+    ecosystem.print_results()
 
     # print success message
-    generation_string = "GENERATION" if ecosystem.generation == 1 else "GENERATIONS"
-    print "\nTARGET REACHED AFTER {0} {1}!!!\n".format(ecosystem.generation, generation_string)
+    ecosystem.print_success()
 
 
 if __name__ == '__main__':
