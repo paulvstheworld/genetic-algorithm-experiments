@@ -7,7 +7,7 @@ For crossover at a certain point
     
     python main.py --target=awesome
 
-## Arguments
+# ARGUMENTS
 
     usage: main.py [-h] [-f FILE] [-t TARGET] [-c CHARSET] [-p POPULATION_SIZE] [-q TOURNAMENT_SIZE] [-r]
 
