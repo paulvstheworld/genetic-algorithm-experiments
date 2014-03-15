@@ -2,17 +2,17 @@
 import argparse
 import os
 import re
+import string
+import sys
 
-from binarygeneticalgorithm import BinaryGeneticAlgorithm
+from ecosystem import Ecosystem, Individual, Population
+from tournament import Tournament
 
+DEFAULT_CHARSET = string.ascii_letters + string.digits
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Using a genetic algorithm to match to a target string')
-    parser.add_argument('-s', '--string',
-                        help='string final target',
-                        dest='string',
-                        required=False,
-                        type=str)
+    app_description = 'Using a genetic algorithm to match to a target string'
+    parser = argparse.ArgumentParser(description=app_description)
 
     parser.add_argument('-f', '--file',
                         help='file containing target string',
@@ -20,13 +20,52 @@ def parse_args():
                         required=False,
                         type=argparse.FileType('r'))
 
+    parser.add_argument('-s', '--string',
+                        help='string final target',
+                        dest='string',
+                        required=False,
+                        type=str)
+
+    parser.add_argument('-c', '--charset',
+                        help='charset to use',
+                        dest='charset',
+                        required=False,
+                        type=str)
+
     args = parser.parse_args()
-    return args.string, args.file
+    return args.file, args.string, args.charset
+
 
 def main():
-    string, file = parse_args()
+    file, target_string, charset = parse_args()
 
-    binary_genetic_algo = BinaryGeneticAlgorithm(string, use_random_crossover=False)
+    if not file and not target_string:
+        print 'ERROR: Must pass either a file containing a target string or a target string'
+        sys.exit(1)
+
+    if file:
+        with open(file) as f:
+            target_string = f.readline()
+
+    if not charset:
+        charset = DEFAULT_CHARSET
+
+    # set ideal target
+    target_individual = Individual()
+    target_individual.genes = list(target_string)
+
+    ecosystem = Ecosystem(charset, target_individual)
+    ecosystem.set_random_current_population(50)
+    
+    while ecosystem.get_current_fittest().genes != target_individual.genes:
+        ecosystem.evolve()
+        print "Currently at generation {0}".format(ecosystem.generation)
+        print "Fittest gene = {0}".format(''.join(ecosystem.get_current_fittest().genes))
+
+    print "TARGET REACHED!!!"
+    print "Target = {0}".format(''.join(ecosystem.get_current_fittest().genes))
+
 
 if __name__ == '__main__':
     main()
+

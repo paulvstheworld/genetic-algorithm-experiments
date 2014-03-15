@@ -13,3 +13,9 @@ For crossover at random points
 
     python main.py --solution 1111000000000000000000000000000000000000000000000000000000001111
 
+
+#TODO
+
+* allow user to add 64-bit array via reading a file
+* better error message when parsing 64-bit array
+* make random be True or nothing (in case False)
