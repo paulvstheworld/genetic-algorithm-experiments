@@ -76,7 +76,7 @@ class Ecosystem(object):
         return population
 
     def __init__(self, charset, target_individual,
-                 tournament_size=15, uniform_rate=0.5, mutation_rate=0.015):
+                 tournament_size, uniform_rate=0.5, mutation_rate=0.015):
         self.generation = 1
         self.current_population = None
         self.charset = charset
