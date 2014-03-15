@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 import argparse
-import os
-import re
 import string
 import sys
 
 from ecosystem import Ecosystem, Individual, Population
 from tournament import Tournament
+
 
 DEFAULT_CHARSET = string.ascii_letters + string.digits
 
@@ -20,9 +19,9 @@ def parse_args():
                         required=False,
                         type=argparse.FileType('r'))
 
-    parser.add_argument('-s', '--string',
-                        help='string final target',
-                        dest='string',
+    parser.add_argument('-t', '--target',
+                        help='final target string',
+                        dest='target',
                         required=False,
                         type=str)
 
@@ -32,12 +31,22 @@ def parse_args():
                         required=False,
                         type=str)
 
+
+    parser.add_argument('-r', '--random-crossover',
+                        help='use a random crossover over each gene',
+                        dest='random_crossover',
+                        action='store_true')
+
+    parser.set_defaults(random_crossover=False)
+    parser.set_defaults(charset=DEFAULT_CHARSET)
+
+
     args = parser.parse_args()
-    return args.file, args.string, args.charset
+    return args.file, args.target, args.charset, args.random_crossover
 
 
 def main():
-    file, target_string, charset = parse_args()
+    file, target_string, charset, random_crossover = parse_args()
 
     if not file and not target_string:
         print 'ERROR: Must pass either a file containing a target string or a target string'
@@ -47,24 +56,29 @@ def main():
         with open(file) as f:
             target_string = f.readline()
 
-    if not charset:
-        charset = DEFAULT_CHARSET
+    for char in target_string:
+        if char not in charset:
+            print 'ERROR: Characters does not contain all characters in target string'
+            sys.exit(1)
+    
 
     # set ideal target
-    target_individual = Individual()
-    target_individual.genes = list(target_string)
-
+    target_individual = Individual(list(target_string))
+    
+    # set ecosystem
     ecosystem = Ecosystem(charset, target_individual)
     ecosystem.set_random_current_population(50)
     
+    # evolve ecosystem until the fittest individual matches the target
     while ecosystem.get_current_fittest() != target_individual:
-        ecosystem.evolve()
-        print "Currently at generation {0}".format(ecosystem.generation)
+        ecosystem.evolve(random_crossover)
+        print "Generation = {0}".format(ecosystem.generation)
         print "Fittest gene = {0}".format(''.join(ecosystem.get_current_fittest().genes))
 
-    print "TARGET REACHED AFTER {0} GENERATIONS!!!".format(ecosystem.generation)
-    print "Target = {0}".format(''.join(ecosystem.get_current_fittest().genes))
+    # print success message
+    generation_string = "GENERATION" if ecosystem.generation == 1 else "GENERATIONS"
+    print "\nTARGET REACHED AFTER {0} {1}!!!\n".format(ecosystem.generation, generation_string)
+
 
 if __name__ == '__main__':
     main()
-

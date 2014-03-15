@@ -2,10 +2,9 @@ import random
 
 def crossover_pt(individual1, individual2, uniform_rate):
     from ecosystem import Individual
+    new_individual = Individual()
 
     point = int(uniform_rate * len(individual1.genes))
-
-    new_individual = Individual()
     new_individual.genes = individual1.genes[0:point]
     new_individual.genes += individual2.genes[point:]
     return new_individual

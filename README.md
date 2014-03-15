@@ -3,7 +3,7 @@ genetic-algorithm-experiments
 
 #Experiments in genetic algorithms
 
-1. Basic Binary Genetic Algorithm
+1. Evolve towards a target string
 	* Uses a basic binary genetic algorithm strategy to reach a 64-bit array solution
 
 2. Traveling Salesman Problem

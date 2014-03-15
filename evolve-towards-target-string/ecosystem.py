@@ -8,9 +8,9 @@ class Individual(object):
     def get_random_genes(charset, gene_size):
         return [random.choice(charset) for _ in range(gene_size)]
 
-    def __init__(self):
-        self._fitness = None
-        self.genes = [] # cached fitness scores
+    def __init__(self, genes=[]):
+        self._fitness = None # cached fitness scores
+        self.genes = genes[:]
 
     def __eq__(self, other):
         return self.genes == other.genes
@@ -22,8 +22,12 @@ class Individual(object):
         if not self._fitness:
             fitness_score = 0
             for i in range(0, len(self.genes)):
-                fitness_score += abs(ord(self.genes[i])
+                try:
+                    fitness_score += abs(ord(self.genes[i])
                                      - ord(target_individual.genes[i]))
+                except:
+                    import ipdb
+                    ipdb.set_trace()
             self._fitness = fitness_score
         return self._fitness
 
